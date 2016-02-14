@@ -8,7 +8,7 @@
     public abstract class BaseController : Controller
     {
         public ICacheService Cache { get; set; }
-
+        
         protected IMapper Mapper
         {
             get

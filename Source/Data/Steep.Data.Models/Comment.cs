@@ -1,12 +1,11 @@
 ﻿namespace Steep.Data.Models
 {
+    using Common.Models;
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class Comment
+    public class Comment : BaseModel<int>
     {
-        public int Id { get; set; }
-
         [Required]
         public int ChapterId { get; set; }
 
@@ -20,8 +19,5 @@
         [Required]
         [MaxLength(500)]
         public string Content { get; set; }
-
-        [Required]
-        public DateTime CreatedOn { get; set; }
     }
 }

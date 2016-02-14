@@ -1,11 +1,10 @@
 ﻿namespace Steep.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using Common.Models;
 
-    public class Chapter
+    public class Chapter : BaseModel<int>
     {
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(30)]
         public string Title { get; set; }

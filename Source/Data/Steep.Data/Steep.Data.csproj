@@ -67,6 +67,10 @@
     <Compile Include="Migrations\201602141201203_AddedDbSets.Designer.cs">
       <DependentUpon>201602141201203_AddedDbSets.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602141435163_Remove-Unnecessary-Ids.cs" />
+    <Compile Include="Migrations\201602141435163_Remove-Unnecessary-Ids.Designer.cs">
+      <DependentUpon>201602141435163_Remove-Unnecessary-Ids.cs</DependentUpon>
+    </Compile>
     <Compile Include="SteepDbContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602141201203_AddedDbSets.resx">
       <DependentUpon>201602141201203_AddedDbSets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602141435163_Remove-Unnecessary-Ids.resx">
+      <DependentUpon>201602141435163_Remove-Unnecessary-Ids.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

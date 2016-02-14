@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Steep.Data.Models
+﻿namespace Steep.Data.Models
 {
-    public class Genre
-    {
-        public int Id { get; set; }
+    using System.ComponentModel.DataAnnotations;
+    using Common.Models;
 
+    public class Genre : BaseModel<int>
+    {
         [Required]
         [MaxLength(25)]
         public string Name { get; set; }

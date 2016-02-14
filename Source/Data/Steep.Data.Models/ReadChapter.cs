@@ -1,11 +1,10 @@
 ﻿namespace Steep.Data.Models
 {
+    using Common.Models;
     using System.ComponentModel.DataAnnotations;
 
-    public class ReadChapter
+    public class ReadChapter : BaseModel<int>
     {
-        public int Id { get; set; }
-        
         [Required]
         public int UserId { get; set; }
 

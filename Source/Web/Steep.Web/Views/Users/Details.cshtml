@@ -1,0 +1,30 @@
+﻿@model Steep.Web.ViewModels.Users.DetailsViewModel
+@{
+    ViewBag.Title = "Details";
+}
+<div>
+    <div class="container">
+        <div class="col-md-3 text-center">
+            <div class="affix">
+                <h2 class="text-left">Your profile</h2>
+                @{
+                    Model.AvatarUrl = Model.AvatarUrl ?? "~/Content/Images/default-avatar.png";
+                }
+                <div>
+                    <img src="@Url.Content(Model.AvatarUrl)" alt="Profile image should be here." />
+                </div>
+                <div>@Model.Firstname @Model.Lastname</div>
+            </div>
+        </div>
+        <div class="col-md-9 text-left">
+            <h2>"This is a quote placeholder!"</h2>
+            <h1>Stories</h1>
+            @foreach (var user in Model.Users)
+            {
+                <div>
+                    <a href="/Users/@user.UserName">@user.Firstname @user.Lastname</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
