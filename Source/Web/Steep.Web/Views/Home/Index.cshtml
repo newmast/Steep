@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<h1>Popular numbers</h1>
+<div class="row">
+    @for(int i = 0; i < 1000; i++)
+    {
+        <div class="col-md-4">@i</div>
+    }
+</div>
