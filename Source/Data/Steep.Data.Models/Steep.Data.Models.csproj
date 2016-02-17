@@ -62,7 +62,6 @@
     <Compile Include="Chapter.cs" />
     <Compile Include="Comment.cs" />
     <Compile Include="Genre.cs" />
-    <Compile Include="ReadChapter.cs" />
     <Compile Include="Story.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

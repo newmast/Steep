@@ -1,13 +1,24 @@
 ﻿namespace Steep.Data.Models
 {
-    using Common.Models;
     using System.ComponentModel.DataAnnotations;
-
+    using Common.Models;
+    using System.Collections.Generic;
     public class Story : BaseModel<int>
     {
-        [Required]
-        public int GenreId { get; set; }
+        public Story()
+        {
+            this.Genres = new HashSet<Genre>();
+        }
 
-        public virtual Genre Genre { get; set; }
+        [Required]
+        [MaxLength(30)]
+        public string Name { get; set; }
+
+        [Required]
+        public string AuthorId { get; set; }
+
+        public virtual User Author { get; set; }
+
+        public virtual ICollection<Genre> Genres { get; set; }
     }
 }

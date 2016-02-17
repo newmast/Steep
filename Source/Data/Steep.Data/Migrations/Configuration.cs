@@ -2,41 +2,80 @@
 {
     using System.Data.Entity.Migrations;
     using System.Linq;
-    using Steep.Common;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
 
     using Models;
-
+    using Steep.Common;
+    using System;
     public sealed class Configuration : DbMigrationsConfiguration<SteepDbContext>
     {
         public Configuration()
         {
-            this.AutomaticMigrationsEnabled = false;
-            this.AutomaticMigrationDataLossAllowed = false;
+            this.AutomaticMigrationsEnabled = true;
+            this.AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(SteepDbContext context)
         {
-            const string AdministratorUserName = "admin@admin.com";
+            const string AdministratorUserName = "admin";
+            const string AdministratorEmail = "admin@admin.com";
             const string AdministratorPassword = AdministratorUserName;
 
-            if (!context.Roles.Any())
+            if (!context.Roles.Any() || context.Users.Count() == 0)
             {
-                // Create admin role
-                var roleStore = new RoleStore<IdentityRole>(context);
-                var roleManager = new RoleManager<IdentityRole>(roleStore);
-                var role = new IdentityRole { Name = GlobalConstants.AdministratorRoleName };
-                roleManager.Create(role);
+                const string UserName = "admin";
+                const string RoleName = "Administrator";
 
-                // Create admin user
+                var userRole = new IdentityRole { Name = RoleName, Id = Guid.NewGuid().ToString() };
+                context.Roles.Add(userRole);
+
+                var hasher = new PasswordHasher();
+
+                var user = new User
+                {
+                    UserName = UserName,
+                    PasswordHash = hasher.HashPassword(UserName),
+                    Email = "admin@admin.com",
+                    EmailConfirmed = true,
+                    SecurityStamp = Guid.NewGuid().ToString()
+                };
+
+                user.Roles.Add(new IdentityUserRole { RoleId = userRole.Id, UserId = user.Id });
+
+                context.Users.Add(user);
+                context.SaveChanges();
+            }
+
+            if (!context.Genres.Any())
+            {
+                var genreNames = new[] { "Comedy", "Time travel", "Western", "Tragedy", "Horror", "Fanfiction", "Fantasy", "Action", "Drama" };
+
+                for (int i = 0; i < genreNames.Length; i++)
+                {
+                    var genre = new Genre
+                    {
+                        Name = genreNames[i]
+                    };
+
+                    context.Genres.Add(genre);
+                }
+
                 var userStore = new UserStore<User>(context);
                 var userManager = new UserManager<User>(userStore);
-                var user = new User { UserName = AdministratorUserName, Email = AdministratorUserName };
-                userManager.Create(user, AdministratorPassword);
 
-                // Assign user to admin role
-                userManager.AddToRole(user.Id, GlobalConstants.AdministratorRoleName);
+                for (int i = 0; i < 3; i++)
+                {
+                    var story = new Story
+                    {
+                        AuthorId = userManager.Users.FirstOrDefault().Id,
+                        Name = "This is story #" + i
+                    };
+
+                    context.Stories.Add(story);
+                }
+
+                context.SaveChanges();
             }
         }
     }

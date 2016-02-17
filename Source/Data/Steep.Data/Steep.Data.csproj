@@ -59,18 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201602141147544_InitalCreate.cs" />
-    <Compile Include="Migrations\201602141147544_InitalCreate.Designer.cs">
-      <DependentUpon>201602141147544_InitalCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602141201203_AddedDbSets.cs" />
-    <Compile Include="Migrations\201602141201203_AddedDbSets.Designer.cs">
-      <DependentUpon>201602141201203_AddedDbSets.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602141435163_Remove-Unnecessary-Ids.cs" />
-    <Compile Include="Migrations\201602141435163_Remove-Unnecessary-Ids.Designer.cs">
-      <DependentUpon>201602141435163_Remove-Unnecessary-Ids.cs</DependentUpon>
-    </Compile>
     <Compile Include="SteepDbContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,17 +90,6 @@
     <AdditionalFiles Include="..\..\stylecop.json">
       <Link>stylecop.json</Link>
     </AdditionalFiles>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201602141147544_InitalCreate.resx">
-      <DependentUpon>201602141147544_InitalCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602141201203_AddedDbSets.resx">
-      <DependentUpon>201602141201203_AddedDbSets.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602141435163_Remove-Unnecessary-Ids.resx">
-      <DependentUpon>201602141435163_Remove-Unnecessary-Ids.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

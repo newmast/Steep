@@ -1,10 +1,16 @@
 ﻿namespace Steep.Data.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Common.Models;
 
     public class Chapter : BaseModel<int>
     {
+        public Chapter()
+        {
+            this.UsersThatRead = new HashSet<User>();
+        }
+
         [Required]
         [MaxLength(30)]
         public string Title { get; set; }
@@ -17,6 +23,8 @@
         public int UserId { get; set; }
 
         public virtual User User { get; set; }
+
+        public virtual ICollection<User> UsersThatRead { get; set; }
 
         [Required]
         [MaxLength(15000)]

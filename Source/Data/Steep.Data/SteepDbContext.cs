@@ -8,7 +8,7 @@
 
     using Microsoft.AspNet.Identity.EntityFramework;
 
-    using Steep.Data.Models;
+    using Models;
 
     public class SteepDbContext : IdentityDbContext<User>
     {
@@ -22,8 +22,6 @@
         public IDbSet<Comment> Comments { get; set; }
 
         public IDbSet<Genre> Genres { get; set; }
-
-        public IDbSet<ReadChapter> ReadChapters { get; set; }
 
         public IDbSet<Story> Stories { get; set; }
 

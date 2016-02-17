@@ -9,6 +9,7 @@
 
     public class UsersController : BaseController
     {
+        [HttpGet]
         public async Task<ActionResult> Details(string id)
         {
             var userManager = this.Request.GetOwinContext().GetUserManager<SteepUserManager>();
