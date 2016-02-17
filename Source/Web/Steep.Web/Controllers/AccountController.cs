@@ -177,6 +177,7 @@
                     Firstname = model.Firstname,
                     Lastname = model.Lastname
                 };
+
                 var result = await this.UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

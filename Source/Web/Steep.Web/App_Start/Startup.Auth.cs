@@ -7,8 +7,8 @@
     using Microsoft.Owin;
     using Microsoft.Owin.Security.Cookies;
 
-    using Steep.Data;
-    using Steep.Data.Models;
+    using Data;
+    using Data.Models;
 
     using Owin;
 
