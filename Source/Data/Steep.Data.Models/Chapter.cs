@@ -20,9 +20,9 @@
         public virtual Chapter PreviousChapter { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public string AuthorId { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual User Author { get; set; }
 
         public virtual ICollection<User> UsersThatRead { get; set; }
 

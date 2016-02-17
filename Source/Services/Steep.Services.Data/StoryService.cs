@@ -5,6 +5,7 @@
     using Steep.Data.Common;
     using Steep.Data.Models;
     using System.Collections.Generic;
+    using System;
 
     public class StoryService : IStoryService
     {
@@ -53,6 +54,11 @@
 
             return this.storyRepository.All()
                        .FirstOrDefault(x => x.Name == story.Name);
+        }
+
+        public IQueryable<Story> All()
+        {
+            return this.storyRepository.All();
         }
     }
 }

@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
-            @using (Html.BeginForm("Add", "Story", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("Add", "Chapter", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
                 <h4>Create a story</h4>
@@ -22,18 +22,21 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.ExtendedStoryId, new { @class = "col-md-2 control-label" })
+                    @Html.LabelFor(m => m.ExtendedStory, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.EditorFor(m => m.ExtendedStoryId, new { List = Model.ExtendedStory, @class = "form-control col-md-5" })
-                        @Html.ValidationMessageFor(m => m.ExtendedStoryId, "", new { @class = "text-danger" })
+                        @(Html.Kendo()
+                              .DropDownListFor(x => x.ExtendedStoryId)
+                              .BindTo(Model.ExtendedStory)
+                              .DataTextField("Text")
+                              .DataValueField("Value"))
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.PreviousChapterId, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(m => m.PreviousChapterId, new { List = Model.PreviousChapterSelect, @class = "form-control col-md-5" })
-                        @Html.ValidationMessageFor(m => m.PreviousChapterId, "", new { @class = "text-danger" })
-                    </div>
+                    @(Html.Kendo()
+                          .DropDownListFor(x => x.PreviousChapterSelectId)
+                          .BindTo(Model.PreviousChapterSelect)
+                          .DataTextField("Text")
+                          .DataValueField("Value"))
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Content, new { @class = "col-md-2 control-label" })

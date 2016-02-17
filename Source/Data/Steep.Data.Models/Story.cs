@@ -3,6 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using Common.Models;
     using System.Collections.Generic;
+
     public class Story : BaseModel<int>
     {
         public Story()
@@ -13,8 +14,7 @@
         [Required]
         [MaxLength(30)]
         public string Name { get; set; }
-
-        [Required]
+        
         public string AuthorId { get; set; }
 
         public virtual User Author { get; set; }

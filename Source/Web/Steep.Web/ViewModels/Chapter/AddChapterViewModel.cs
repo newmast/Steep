@@ -9,17 +9,18 @@
         [Required]
         [MaxLength(30)]
         public string Title { get; set; }
-
-        public string PreviousChapterId { get; set; }
-
-        public IEnumerable<SelectListItem> PreviousChapterSelect { get; set; }
-
+        
         [Required]
         [MaxLength(15000)]
+        [DataType(DataType.MultilineText)]
         public string Content { get; set; }
 
-        public string ExtendedStoryId { get; set; }
+        public int ExtendedStoryId { get; set; }
 
         public IEnumerable<SelectListItem> ExtendedStory { get; set; }
+
+        public int PreviousChapterSelectId { get; set; }
+
+        public IEnumerable<SelectListItem> PreviousChapterSelect { get; set; }
     }
 }
