@@ -9,6 +9,8 @@
 
         IQueryable<Chapter> GetLastestItems(int numberOfItems);
 
+        bool IsTitleUnique(string title);
+
         IQueryable<Chapter> GetChaptersByStoryId(int storyId);
 
         Chapter Add(Chapter chapterToAdd);

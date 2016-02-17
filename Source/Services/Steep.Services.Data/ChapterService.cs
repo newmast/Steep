@@ -30,7 +30,9 @@
 
         public IQueryable<Chapter> GetChaptersByStoryId(int storyId)
         {
-            throw new NotImplementedException();
+            return this.chapterRepository.All()
+                       .Where(x => x.StoryId == storyId)
+                       .OrderBy(x => x.CreatedOn);
         }
 
         public IQueryable<Chapter> GetLastestItems(int numberOfItems)
@@ -38,6 +40,13 @@
             return this.chapterRepository.All()
                 .OrderByDescending(x => x.CreatedOn)
                 .Take(10);
+        }
+
+        public bool IsTitleUnique(string title)
+        {
+            return this.chapterRepository
+                .All()
+                .FirstOrDefault(x => x.Title == title) == null;
         }
     }
 }

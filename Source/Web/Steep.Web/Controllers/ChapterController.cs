@@ -23,17 +23,13 @@
         [HttpGet]
         public ActionResult Add()
         {
-            var previousChapterSelect = this.GetPreviousAvailableChapters();
-            previousChapterSelect.Add(new SelectListItem()
-            {
-                Text = "None (this is the first chapter)",
-                Value = "-1"
-            });
+            this.Cache.Get("Stories", () => this.GetStoriesForExtension(), 10 * 60);
             var model = new AddChapterViewModel
             {
-                ExtendedStory = this.GetStoriesForExtension(),
-                PreviousChapterSelect = previousChapterSelect
+                ExtendedStory = this.Cache.Get("Stories", () => this.GetStoriesForExtension(), 10 * 60),
+                PreviousChapterSelect = this.GetPreviousAvailableChapters()
             };
+
             return this.View(model);
         }
 
@@ -41,8 +37,20 @@
         [ValidateAntiForgeryToken]
         public ActionResult Add(AddChapterViewModel model)
         {
-            if (!this.ModelState.IsValid)
+            var isTitleUnique = this.chapterService.IsTitleUnique(model.Title);
+            if (!this.ModelState.IsValid ||
+                !isTitleUnique)
             {
+                // TODO: Cache these
+                model.PreviousChapterSelect = this.GetPreviousAvailableChapters();
+                model.ExtendedStory = this.GetStoriesForExtension();
+                model.Content = model.Content ?? string.Empty;
+
+                if (!isTitleUnique)
+                {
+                    this.ModelState.AddModelError(string.Empty, "Title already in use!");
+                }
+
                 return this.View(model);
             }
 
@@ -62,7 +70,7 @@
             };
 
             this.chapterService.Add(chapterToAdd);
-            this.TempData["Notification"] = "Congratulations, chapter successfully added!";
+            this.TempData["Notification"] = "Congratulations! Chapter successfully added!";
             return this.RedirectToAction("Index", "Home");
         }
 
@@ -80,7 +88,14 @@
 
         public List<SelectListItem> GetPreviousAvailableChapters()
         {
-            return this.chapterService
+            var chapterList = new List<SelectListItem>();
+            chapterList.Add(new SelectListItem
+                            {
+                                Text = "Introduction Chapter",
+                                Value = "-1"
+                            });
+
+            var serviceChapters = this.chapterService
                 .All()
                 .Select(x => new SelectListItem
                 {
@@ -88,6 +103,10 @@
                     Value = x.Id.ToString()
                 })
                 .ToList();
+
+            chapterList.AddRange(serviceChapters);
+
+            return chapterList;
         }
     }
 }

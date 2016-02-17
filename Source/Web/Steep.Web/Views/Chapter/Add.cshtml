@@ -3,22 +3,21 @@
     ViewBag.Title = "Add";
 }
 
-<h2>Add</h2>
 
-<div class="row">
-    <div class="col-md-8">
+<div class="container">
+    <h2>Add</h2>
+    <div>
         <section id="loginForm">
             @using (Html.BeginForm("Add", "Chapter", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>Create a story</h4>
+                <h4>Add a new chapter</h4>
                 <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                 <div class="form-group">
                     @Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
                         @Html.EditorFor(m => m.Title, new { @class = "form-control col-md-5" })
-                        @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -32,22 +31,25 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @(Html.Kendo()
-                          .DropDownListFor(x => x.PreviousChapterSelectId)
-                          .BindTo(Model.PreviousChapterSelect)
-                          .DataTextField("Text")
-                          .DataValueField("Value"))
+                    @Html.LabelFor(m => m.PreviousChapterSelect, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @(Html.Kendo()
+                              .DropDownListFor(x => x.PreviousChapterSelectId)
+                              .BindTo(Model.PreviousChapterSelect)
+                              .DataTextField("Text")
+                              .DataValueField("Value"))
+                    </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Content, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(m => m.Content, new { @class = "form-control col-md-5" })
-                        @Html.ValidationMessageFor(m => m.Content, "", new { @class = "text-danger" })
+                    <div class="col-md-10 k-content">
+                        @(Html.Kendo()
+                              .EditorFor(m => m.Content))
                     </div>
                 </div>
                 <div id="create-story-button" class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create story" class="btn btn-default" />
+                        <input type="submit" value="Add chapter" class="btn btn-default" />
                     </div>
                 </div>
             }
