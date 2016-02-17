@@ -8,7 +8,7 @@
     using System.Linq;
 
     [Authorize]
-    public class StoryController : Controller
+    public class StoryController : BaseController
     {
         private IStoryService storyService;
         private IGenreService genreService;
@@ -33,7 +33,7 @@
         [ValidateAntiForgeryToken]
         public ActionResult Add(AddStoryViewModel model)
         {
-            this.storyService.Create(model.Name, this.User.Identity.GetUserId(), model.SelectedGenres);
+            this.storyService.Create(model.Name, this.UserId, model.SelectedGenres);
             return this.RedirectToAction("Index", "Home");
         }
     }

@@ -9,7 +9,7 @@
     using ViewModels.Chapter;
 
     [Authorize]
-    public class ChapterController : Controller
+    public class ChapterController : BaseController
     {
         private IStoryService storyService;
         private IChapterService chapterService;
@@ -57,7 +57,7 @@
                 Content = model.Content,
                 PreviousChapterId = previousChapterId,
                 StoryId = model.ExtendedStoryId,
-                AuthorId = this.User.Identity.GetUserId(),
+                AuthorId = this.UserId,
                 Title = model.Title
             };
 

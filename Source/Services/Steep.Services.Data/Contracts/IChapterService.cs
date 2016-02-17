@@ -7,7 +7,9 @@
     {
         IQueryable<Chapter> All();
 
-        IQueryable<Chapter> GetLatestTen();
+        IQueryable<Chapter> GetLastestItems(int numberOfItems);
+
+        IQueryable<Chapter> GetChaptersByStoryId(int storyId);
 
         Chapter Add(Chapter chapterToAdd);
     }

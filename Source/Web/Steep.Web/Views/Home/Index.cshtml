@@ -1,17 +1,23 @@
-﻿@model string
+﻿@model Steep.Web.ViewModels.Home.IndexViewModel
 @{
     ViewBag.Title = "Home Page";
 }
 
-@if (Model != null)
+@if (Model.NotificationMessage != null)
 {
-    <div class="alert alert-success">@Model</div>
+    <div class="alert alert-success">@Model.NotificationMessage</div>
 }
 
-<h1>Popular numbers</h1>
-<div class="row">
-    @for(int i = 0; i < 1000; i++)
-    {
-        <div class="col-md-4">@i</div>
-    }
+<div class="container">
+    <h1>Latest work</h1>
+    <div>
+        @foreach (var chapter in Model.LatestChapters)
+        {
+            <div>
+                <h1><a>@chapter.Title</a></h1>
+                <p>@chapter.Content</p>
+                <strong>Authored by: @chapter.Author</strong>
+            </div>
+        }
+    </div
 </div>

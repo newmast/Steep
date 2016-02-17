@@ -18,14 +18,7 @@
         public Chapter Add(Chapter chapterToAdd)
         {
             this.chapterRepository.Add(chapterToAdd);
-            try
-            {
-                this.chapterRepository.Save();
-            }
-            catch(Exception e)
-            {
-
-            }
+            this.chapterRepository.Save();
 
             return chapterToAdd;
         }
@@ -33,6 +26,11 @@
         public IQueryable<Chapter> All()
         {
             return this.chapterRepository.All();
+        }
+
+        public IQueryable<Chapter> GetChaptersByStoryId(int storyId)
+        {
+            throw new NotImplementedException();
         }
 
         public IQueryable<Chapter> GetLastestItems(int numberOfItems)

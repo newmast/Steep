@@ -1,6 +1,5 @@
 ﻿namespace Steep.Web.Controllers
 {
-    using System.Linq;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
@@ -9,7 +8,7 @@
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
 
-    using Steep.Web.ViewModels.Manage;
+    using ViewModels.Manage;
 
     [Authorize]
     public class ManageController : BaseController
@@ -98,11 +97,11 @@
             var result =
                 await
                 this.UserManager.RemoveLoginAsync(
-                    this.User.Identity.GetUserId(),
+                    this.UserId,
                     new UserLoginInfo(loginProvider, providerKey));
             if (result.Succeeded)
             {
-                var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
+                var user = await this.UserManager.FindByIdAsync(this.UserId);
                 if (user != null)
                 {
                     await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -137,12 +136,12 @@
             var result =
                 await
                 this.UserManager.ChangePasswordAsync(
-                    this.User.Identity.GetUserId(),
+                    this.UserId,
                     model.OldPassword,
                     model.NewPassword);
             if (result.Succeeded)
             {
-                var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
+                var user = await this.UserManager.FindByIdAsync(this.UserId);
                 if (user != null)
                 {
                     await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -168,10 +167,10 @@
         {
             if (this.ModelState.IsValid)
             {
-                var result = await this.UserManager.AddPasswordAsync(this.User.Identity.GetUserId(), model.NewPassword);
+                var result = await this.UserManager.AddPasswordAsync(this.UserId, model.NewPassword);
                 if (result.Succeeded)
                 {
-                    var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
+                    var user = await this.UserManager.FindByIdAsync(this.UserId);
                     if (user != null)
                     {
                         await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -203,13 +202,13 @@
         public async Task<ActionResult> LinkLoginCallback()
         {
             var loginInfo =
-                await this.AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, this.User.Identity.GetUserId());
+                await this.AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, this.UserId);
             if (loginInfo == null)
             {
                 return this.RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
             }
 
-            var result = await this.UserManager.AddLoginAsync(this.User.Identity.GetUserId(), loginInfo.Login);
+            var result = await this.UserManager.AddLoginAsync(this.UserId, loginInfo.Login);
             return result.Succeeded
                        ? this.RedirectToAction("ManageLogins")
                        : this.RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
@@ -236,13 +235,13 @@
 
         private bool HasPassword()
         {
-            var user = this.UserManager.FindById(this.User.Identity.GetUserId());
+            var user = this.UserManager.FindById(this.UserId);
             return user?.PasswordHash != null;
         }
 
         private bool HasPhoneNumber()
         {
-            var user = this.UserManager.FindById(this.User.Identity.GetUserId());
+            var user = this.UserManager.FindById(this.UserId);
             return user?.PhoneNumber != null;
         }
     }
