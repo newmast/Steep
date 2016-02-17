@@ -43,7 +43,7 @@
             {
                 // TODO: Cache these
                 model.PreviousChapterSelect = this.GetPreviousAvailableChapters();
-                model.ExtendedStory = this.GetStoriesForExtension();
+                model.ExtendedStory = this.Cache.Get("Stories", () => this.GetStoriesForExtension(), 10 * 60);
                 model.Content = model.Content ?? string.Empty;
 
                 if (!isTitleUnique)
