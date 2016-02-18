@@ -1,8 +1,8 @@
 ﻿namespace Steep.Web.ViewModels.Users
 {
-    using System.Linq;
     using Data.Models;
     using Infrastructure.Mapping;
+    using System.Collections.Generic;
 
     public class DetailsViewModel : IMapFrom<User>
     {
@@ -14,6 +14,8 @@
 
         public string Quote { get; set; }
 
-        public IQueryable<User> Users { get; set; }
+        public List<Story> Stories { get; set; }
+
+        public List<Chapter> Chapters { get; set; }
     }
 }

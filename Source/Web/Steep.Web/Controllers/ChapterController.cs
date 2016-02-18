@@ -23,10 +23,9 @@
         [HttpGet]
         public ActionResult Add()
         {
-            this.Cache.Get("Stories", () => this.GetStoriesForExtension(), 10 * 60);
             var model = new AddChapterViewModel
             {
-                ExtendedStory = this.Cache.Get("Stories", () => this.GetStoriesForExtension(), 10 * 60),
+                ExtendedStory = this.GetStoriesForExtension(),
                 PreviousChapterSelect = this.GetPreviousAvailableChapters()
             };
 
@@ -41,9 +40,8 @@
             if (!this.ModelState.IsValid ||
                 !isTitleUnique)
             {
-                // TODO: Cache these
                 model.PreviousChapterSelect = this.GetPreviousAvailableChapters();
-                model.ExtendedStory = this.Cache.Get("Stories", () => this.GetStoriesForExtension(), 10 * 60);
+                model.ExtendedStory = this.GetStoriesForExtension();
                 model.Content = model.Content ?? string.Empty;
 
                 if (!isTitleUnique)
