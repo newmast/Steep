@@ -9,6 +9,7 @@
         public Story()
         {
             this.Genres = new HashSet<Genre>();
+            this.Chapters = new HashSet<Chapter>();
         }
 
         [Required]
@@ -18,6 +19,8 @@
         public string AuthorId { get; set; }
 
         public virtual User Author { get; set; }
+
+        public virtual ICollection<Chapter> Chapters { get; set; }
 
         public virtual ICollection<Genre> Genres { get; set; }
     }

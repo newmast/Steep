@@ -207,6 +207,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChapterController.cs" />
     <Compile Include="ViewModels\Chapter\AddChapterViewModel.cs" />
+    <Compile Include="ViewModels\Chapter\ChapterDetailsViewModel.cs" />
     <Compile Include="ViewModels\Home\IndexChapterViewModel.cs" />
     <Compile Include="ViewModels\Home\IndexViewModel.cs" />
     <Compile Include="ViewModels\Story\AddStoryViewModel.cs" />
@@ -562,6 +563,7 @@
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
     <Content Include="Views\Chapter\Add.cshtml" />
+    <Content Include="Views\Chapter\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

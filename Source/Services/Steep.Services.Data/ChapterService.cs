@@ -28,6 +28,12 @@
             return this.chapterRepository.All();
         }
 
+        public IQueryable<Chapter> GetById(int id)
+        {
+            return this.chapterRepository.All()
+                .Where(x => x.Id == id);
+        }
+
         public IQueryable<Chapter> GetChaptersByStoryId(int storyId)
         {
             return this.chapterRepository.All()

@@ -4,6 +4,6 @@
     {
         int DecodeId(string urlId);
 
-        string EncodeId(int id);
+        string EncodeId(string id);
     }
 }

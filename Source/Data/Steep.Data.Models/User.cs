@@ -12,6 +12,7 @@
         public User()
         {
             this.ReadChapters = new HashSet<Chapter>();
+            this.Stories = new HashSet<Story>();
         }
 
         [MaxLength(25)]
@@ -25,6 +26,8 @@
 
         [MaxLength(150)]
         public string Quote { get; set; }
+
+        public virtual ICollection<Story> Stories { get; set; }
 
         public virtual ICollection<Chapter> ReadChapters { get; set; }
 

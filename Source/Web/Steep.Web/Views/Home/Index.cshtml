@@ -14,7 +14,12 @@
         @foreach (var chapter in Model.LatestChapters)
         {
             <div>
-                <h1><a>@chapter.Title</a></h1>
+                <h1><a href="/chapter/details/@chapter.Identifier">@chapter.Title</a></h1>
+                @Html.ActionLink(chapter.Title,
+                "Details",
+                "Chapter",
+                new { id = chapter.Identifier }, 
+                null)
                 <p>@chapter.Content</p>
                 <strong>Authored by: @chapter.Author</strong>
             </div>
