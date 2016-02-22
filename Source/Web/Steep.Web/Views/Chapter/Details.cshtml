@@ -1,0 +1,16 @@
+﻿@model Steep.Web.ViewModels.Chapter.ChapterDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="container">
+    <h1>@Model.Title</h1>
+    <h3>From story: @Model.StoryName <a href="/story/@Model.StoryUrl">[Read more]</a></h3>
+    <p>@Model.Content</p>
+    <strong>@Model.Author</strong>
+    <div>On: @Model.CreatedOn</div>
+</div>
+

@@ -18,13 +18,47 @@
         </div>
         <div class="col-md-9 text-left">
             <h2>"This is a quote placeholder!"</h2>
-            <h1>Stories</h1>
-            @foreach (var user in Model.Users)
-            {
-                <div>
-                    <a href="/Users/@user.UserName">@user.Firstname @user.Lastname</a>
-                </div>
-            }
+            @(Html.Kendo()
+                  .TabStrip()
+                  .Name("tabstrip")
+                  .Animation(animation =>
+                      animation.Open(effect =>
+                          effect.Fade(FadeDirection.In)))
+                  .Items(tabstrip =>
+                  {
+                  tabstrip.Add().Text("Stories")
+                          .Selected(true)
+                          .Content(
+                          @<text>
+                            @if (Model.Stories.Count == 0)
+                            {
+                                <div><strong>User hasn't started any stories.</strong></div>
+                            }
+                            @foreach (var story in Model.Stories)
+                            {
+                                <div>
+                                    <h2>@story.Name</h2>
+                                    <strong>@story.CreatedOn</strong>
+                                </div>
+                            }
+                          </text>);
+
+                  tabstrip.Add().Text("Chapters")
+                          .Content(
+                          @<text>
+                            @if (Model.Chapters.Count == 0)
+                            {
+                                <div><strong>User hasn't written any chapters.</strong></div>
+                            }
+                            @foreach (var chapter in Model.Chapters)
+                            {
+                                <div>
+                                    <h2>@chapter.Title</h2>
+                                    <strong>@chapter.CreatedOn</strong>
+                                </div>
+                            }
+                          </text>);
+                  }))
         </div>
     </div>
 </div>

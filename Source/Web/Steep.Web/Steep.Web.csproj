@@ -207,6 +207,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChapterController.cs" />
     <Compile Include="ViewModels\Chapter\AddChapterViewModel.cs" />
+    <Compile Include="ViewModels\Chapter\ChapterDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Home\IndexChapterViewModel.cs" />
+    <Compile Include="ViewModels\Home\IndexViewModel.cs" />
     <Compile Include="ViewModels\Story\AddStoryViewModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -239,28 +242,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\default-avatar.png" />
+    <Content Include="Content\kendo\kendo.common.core.min.css" />
     <Content Include="Content\kendo\kendo.common.min.css" />
-    <Content Include="Content\kendo\kendo.material.min.css" />
-    <Content Include="Content\kendo\kendo.material.mobile.min.css" />
-    <Content Include="Content\kendo\kendo.materialblack.min.css" />
-    <Content Include="Content\kendo\kendo.materialblack.mobile.min.css" />
-    <Content Include="Content\kendo\kendo.metro.min.css" />
-    <Content Include="Content\kendo\kendo.metro.mobile.min.css" />
-    <Content Include="Content\kendo\kendo.metroblack.min.css" />
-    <Content Include="Content\kendo\kendo.metroblack.mobile.min.css" />
-    <Content Include="Content\kendo\kendo.mobile.all.min.css" />
-    <Content Include="Content\kendo\kendo.mobile.android.dark.min.css" />
-    <Content Include="Content\kendo\kendo.mobile.android.light.min.css" />
-    <Content Include="Content\kendo\kendo.mobile.blackberry.min.css" />
-    <Content Include="Content\kendo\kendo.mobile.common.min.css" />
-    <Content Include="Content\kendo\kendo.mobile.fiori.min.css" />
-    <Content Include="Content\kendo\kendo.mobile.flat.min.css" />
-    <Content Include="Content\kendo\kendo.mobile.ios.min.css" />
-    <Content Include="Content\kendo\kendo.mobile.material.min.css" />
-    <Content Include="Content\kendo\kendo.mobile.meego.min.css" />
-    <Content Include="Content\kendo\kendo.mobile.nova.min.css" />
-    <Content Include="Content\kendo\kendo.mobile.office365.min.css" />
-    <Content Include="Content\kendo\kendo.mobile.wp8.min.css" />
+    <Content Include="Content\kendo\kendo.default.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -278,27 +262,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Areas\Administration\Views\web.config" />
     <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
-    <Content Include="Content\kendo\kendo.material.min.css.map" />
-    <Content Include="Content\kendo\kendo.material.mobile.min.css.map" />
-    <Content Include="Content\kendo\kendo.materialblack.min.css.map" />
-    <Content Include="Content\kendo\kendo.materialblack.mobile.min.css.map" />
-    <Content Include="Content\kendo\kendo.metro.min.css.map" />
-    <Content Include="Content\kendo\kendo.metro.mobile.min.css.map" />
-    <Content Include="Content\kendo\kendo.metroblack.min.css.map" />
-    <Content Include="Content\kendo\kendo.metroblack.mobile.min.css.map" />
-    <Content Include="Content\kendo\kendo.mobile.all.min.css.map" />
-    <Content Include="Content\kendo\kendo.mobile.android.dark.min.css.map" />
-    <Content Include="Content\kendo\kendo.mobile.android.light.min.css.map" />
-    <Content Include="Content\kendo\kendo.mobile.blackberry.min.css.map" />
-    <Content Include="Content\kendo\kendo.mobile.common.min.css.map" />
-    <Content Include="Content\kendo\kendo.mobile.fiori.min.css.map" />
-    <Content Include="Content\kendo\kendo.mobile.flat.min.css.map" />
-    <Content Include="Content\kendo\kendo.mobile.ios.min.css.map" />
-    <Content Include="Content\kendo\kendo.mobile.material.min.css.map" />
-    <Content Include="Content\kendo\kendo.mobile.meego.min.css.map" />
-    <Content Include="Content\kendo\kendo.mobile.nova.min.css.map" />
-    <Content Include="Content\kendo\kendo.mobile.office365.min.css.map" />
-    <Content Include="Content\kendo\kendo.mobile.wp8.min.css.map" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />
@@ -600,6 +563,7 @@
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
     <Content Include="Views\Chapter\Add.cshtml" />
+    <Content Include="Views\Chapter\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -607,7 +571,6 @@
     <Folder Include="Areas\Administration\Views\Shared\" />
     <Folder Include="Scripts\kendo\cultures\" />
     <Folder Include="Scripts\kendo\messages\" />
-    <Folder Include="ViewModels\Home\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

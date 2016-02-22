@@ -59,6 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChapterService.cs" />
+    <Compile Include="Contracts\IChapterService.cs" />
     <Compile Include="Contracts\IGenreService.cs" />
     <Compile Include="Contracts\IStoryService.cs" />
     <Compile Include="GenreService.cs" />
