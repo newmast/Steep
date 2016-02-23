@@ -20,6 +20,18 @@
         }
 
         [HttpGet]
+        public ActionResult Details(string id)
+        {
+            var dbId = this.identifierProvider.DecodeId(id);
+            var chapterDetails = this.chapterService
+                .GetById(dbId)
+                .To<ChapterDetailsViewModel>()
+                .FirstOrDefault();
+            chapterDetails.StoryUrl = this.identifierProvider.EncodeId(chapterDetails.StoryId.ToString());
+            return this.View(chapterDetails);
+        }
+
+        [HttpGet]
         public ActionResult Add()
         {
             var model = new AddStoryViewModel

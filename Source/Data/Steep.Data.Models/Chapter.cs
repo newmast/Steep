@@ -9,11 +9,14 @@
         public Chapter()
         {
             this.UsersThatRead = new HashSet<User>();
+            this.PreviousChapters = new HashSet<Chapter>();
         }
 
         [Required]
         [MaxLength(30)]
         public string Title { get; set; }
+
+        public virtual ICollection<Chapter> PreviousChapters { get; set; }
 
         public int? PreviousChapterId { get; set; }
 

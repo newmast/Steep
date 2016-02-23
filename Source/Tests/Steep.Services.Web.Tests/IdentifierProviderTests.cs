@@ -10,7 +10,7 @@
         {
             const int Id = 1337;
             IIdentifierProvider provider = new IdentifierProvider();
-            var encoded = provider.EncodeId(Id);
+            var encoded = provider.EncodeId(Id.ToString());
             var actual = provider.DecodeId(encoded);
             Assert.AreEqual(Id, actual);
         }

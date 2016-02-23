@@ -14,5 +14,7 @@
         IQueryable<Chapter> GetChaptersByStoryId(int storyId);
 
         Chapter Add(Chapter chapterToAdd);
+
+        IQueryable<Chapter> GetById(int id);
     }
 }

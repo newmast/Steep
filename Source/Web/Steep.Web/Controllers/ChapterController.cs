@@ -1,8 +1,9 @@
 ﻿namespace Steep.Web.Controllers
 {
     using Data.Models;
-    using Microsoft.AspNet.Identity;
+    using Infrastructure.Mapping;
     using Services.Data.Contracts;
+    using Services.Web;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
@@ -13,11 +14,13 @@
     {
         private IStoryService storyService;
         private IChapterService chapterService;
+        private IIdentifierProvider identifierProvider;
 
-        public ChapterController(IStoryService storyService, IChapterService chapterService)
+        public ChapterController(IStoryService storyService, IChapterService chapterService, IIdentifierProvider identifierProvider)
         {
             this.storyService = storyService;
             this.chapterService = chapterService;
+            this.identifierProvider = identifierProvider;
         }
 
         [HttpGet]
@@ -72,6 +75,18 @@
             return this.RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        public ActionResult Details(string id)
+        {
+            var dbId = this.identifierProvider.DecodeId(id);
+            var chapterDetails = this.chapterService
+                .GetById(dbId)
+                .To<ChapterDetailsViewModel>()
+                .FirstOrDefault();
+            chapterDetails.StoryUrl = this.identifierProvider.EncodeId(chapterDetails.StoryId.ToString());
+            return this.View(chapterDetails);
+        }
+
         public List<SelectListItem> GetStoriesForExtension()
         {
             return this.storyService
@@ -83,7 +98,7 @@
                 })
                 .ToList();
         }
-
+        
         public List<SelectListItem> GetPreviousAvailableChapters()
         {
             var chapterList = new List<SelectListItem>();
