@@ -53,12 +53,24 @@
             this.storyRepository.Save();
 
             return this.storyRepository.All()
-                       .FirstOrDefault(x => x.Name == story.Name);
+                .FirstOrDefault(x => x.Name == story.Name);
         }
 
         public IQueryable<Story> All()
         {
             return this.storyRepository.All();
+        }
+
+        public IQueryable<Story> GetById(int id)
+        {
+            return this.storyRepository.All()
+                .Where(x => x.Id == id);
+        }
+
+        public IQueryable<Story> AllForUser(string userId)
+        {
+            return this.storyRepository.All()
+                .Where(x => x.AuthorId == userId);
         }
     }
 }

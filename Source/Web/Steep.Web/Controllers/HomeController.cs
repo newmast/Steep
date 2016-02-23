@@ -9,7 +9,7 @@
 
     public class HomeController : BaseController
     {
-        const int MaxSymbolsPerChapterContentPreview = 600;
+        private const int MaxSymbolsPerChapterContentPreview = 600;
         private IChapterService chapterService;
         private IIdentifierProvider identifierProvider;
 

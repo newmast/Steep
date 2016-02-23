@@ -8,5 +8,9 @@
         Story Create(string storyName, string creatorId, IEnumerable<string> genreNames);
 
         IQueryable<Story> All();
+
+        IQueryable<Story> GetById(int id);
+
+        IQueryable<Story> AllForUser(string userId);
     }
 }
