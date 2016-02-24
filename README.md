@@ -35,3 +35,8 @@ The idea behind it is the users are given the opportunity to determine how a sto
 
 ## Tests
 - Projects that contain the the unit tests.
+
+# Images
+
+<img src="http://i.imgur.com/XlbemEQ.png" />
+<img src="http://i.imgur.com/bBjpfus.png" />
