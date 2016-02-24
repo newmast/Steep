@@ -8,6 +8,7 @@
     using ViewModels.Story;
     using System.Collections.Generic;
     using Data.Models;
+    using ViewModels.Statistics;
     [Authorize]
     public class StoryController : BaseController
     {
@@ -15,17 +16,20 @@
         private IGenreService genreService;
         private IChapterService chapterService;
         private IIdentifierProvider identifierProvider;
+        private IStatisticsService statisticsService;
 
         public StoryController(
             IStoryService storyService,
             IGenreService genreService,
             IIdentifierProvider identifierProvider,
-            IChapterService chapterService)
+            IChapterService chapterService,
+            IStatisticsService statisticsService)
         {
             this.storyService = storyService;
             this.genreService = genreService;
             this.chapterService = chapterService;
             this.identifierProvider = identifierProvider;
+            this.statisticsService = statisticsService;
         }
 
         [HttpGet]
@@ -36,7 +40,16 @@
                 .GetById(dbId)
                 .To<StoryDetailsViewModel>()
                 .FirstOrDefault();
-            
+
+            StatisticsStoryViewModel model = new StatisticsStoryViewModel
+            {
+                NumberOfChapters = this.Cache.Get("NumberOfChaptersForStory", () => this.statisticsService.GetNumberOfChaptersForStory(dbId), 60 * 15),
+                NumberOfViews = this.Cache.Get("NumberOfChaptersForStory", () => this.statisticsService.GetStoryViews(dbId), 60 * 15)
+            };
+
+            storyDetails.StatisticsStoryViewModel = model;
+
+            this.storyService.IncreaseViewCount(dbId);
             return this.View(storyDetails);
         }
 

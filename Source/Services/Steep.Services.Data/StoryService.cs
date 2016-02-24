@@ -67,6 +67,13 @@
                 .Where(x => x.Id == id);
         }
 
+        public void IncreaseViewCount(int storyId)
+        {
+            var chapter = this.storyRepository.All().FirstOrDefault(x => x.Id == storyId);
+            chapter.NumberOfViews++;
+            this.storyRepository.Save();
+        }
+
         public IQueryable<Story> AllForUser(string userId)
         {
             return this.storyRepository.All()

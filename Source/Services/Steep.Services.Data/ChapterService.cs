@@ -48,6 +48,13 @@
                 .Take(10);
         }
 
+        public void IncreaseViewCount(int chapterId)
+        {
+            var chapter = this.chapterRepository.All().FirstOrDefault(x => x.Id == chapterId);
+            chapter.NumberOfViews++;
+            this.chapterRepository.Save();
+        }
+
         public bool IsTitleUnique(string title)
         {
             return this.chapterRepository

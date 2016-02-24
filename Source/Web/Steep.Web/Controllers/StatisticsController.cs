@@ -1,31 +1,43 @@
 ﻿namespace Steep.Web.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Services.Data.Contracts;
-    using Services.Web;
-
-    public class StatisticsController : Controller
+    using ViewModels.Statistics;
+    using System.Web;
+    using Microsoft.AspNet.Identity.Owin;
+    using System.Linq;
+    public class StatisticsController : BaseController
     {
-        private IStoryService storyService;
-        private IGenreService genreService;
-        private IChapterService chapterService;
-        private IIdentifierProvider identifierProvider;
+        private IStatisticsService stats;
 
-        public StatisticsController(
-            IStoryService storyService,
-            IGenreService genreService,
-            IIdentifierProvider identifierProvider,
-            IChapterService chapterService)
+        public StatisticsController(IStatisticsService stats)
         {
-            this.storyService = storyService;
-            this.genreService = genreService;
-            this.chapterService = chapterService;
-            this.identifierProvider = identifierProvider;
+            this.stats = stats;
+        }
+
+        public StatisticsIndexViewModel GetStats()
+        {
+            return new StatisticsIndexViewModel
+            {
+                NumberOfChapters = this.stats.GetNumberOfChapters(),
+                NumberOfStories = this.stats.GetNumberOfStories(),
+                NumberOfGenres = this.stats.GetNumberOfGenres(),
+                NumberOfUsers = this.GetNumberOfUsers()
+            };
         }
 
         public ActionResult Index()
         {
-            return this.View();
+            var model = this.Cache.Get("stats", () => this.GetStats(), 60 * 15);
+            return this.View(model);
+        }
+
+        private int GetNumberOfUsers()
+        {
+            var userManager = this.HttpContext.GetOwinContext().GetUserManager<SteepUserManager>();
+
+            return userManager.Users.Count();
         }
     }
 }

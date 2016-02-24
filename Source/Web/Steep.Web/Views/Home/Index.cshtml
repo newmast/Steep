@@ -27,7 +27,7 @@
             {
                 <div>
                     <h1><a href="/chapter/details/@chapter.Identifier">@chapter.Title</a></h1>
-                    <div>@chapter.Content</div>
+                    <div>@Html.Raw(chapter.Content)</div>
                     <strong>Authored by: <a href="@string.Format("/Users/{0}", chapter.AuthorId)">@chapter.AuthorName</a></strong>
                 </div>
             }

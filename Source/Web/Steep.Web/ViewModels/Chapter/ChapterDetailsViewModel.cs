@@ -6,10 +6,13 @@
     using AutoMapper;
     using Infrastructure.Mapping;
     using Controllers;
+    using Statistics;
 
     public class ChapterDetailsViewModel : IMapFrom<Data.Models.Chapter>, IHaveCustomMappings
     {
         public AddCommentViewModel AddCommentViewModel { get; set; }
+
+        public StatisticsChapterViewModel StatisticsChapterViewModel { get; set; }
 
         public string Id { get; set; }
 
