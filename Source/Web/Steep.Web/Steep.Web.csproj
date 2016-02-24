@@ -222,7 +222,9 @@
     <Compile Include="ViewModels\Home\IndexChapterViewModel.cs" />
     <Compile Include="ViewModels\Home\IndexStoryViewModel.cs" />
     <Compile Include="ViewModels\Home\IndexViewModel.cs" />
+    <Compile Include="ViewModels\Statistics\StatisticsChapterViewModel.cs" />
     <Compile Include="ViewModels\Statistics\StatisticsIndexViewModel.cs" />
+    <Compile Include="ViewModels\Statistics\StatisticsStoryViewModel.cs" />
     <Compile Include="ViewModels\Story\AddStoryViewModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -364,6 +366,8 @@
     <Content Include="Views\Chapter\All.cshtml" />
     <Content Include="Views\Statistics\Index.cshtml" />
     <Content Include="Views\Statistics\_GeneralStatistics.cshtml" />
+    <Content Include="Views\Statistics\_StoryStatistics.cshtml" />
+    <Content Include="Views\Statistics\_ChapterStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -23,5 +23,7 @@
         public virtual ICollection<Chapter> Chapters { get; set; }
 
         public virtual ICollection<Genre> Genres { get; set; }
+
+        public int NumberOfViews { get; set; }
     }
 }

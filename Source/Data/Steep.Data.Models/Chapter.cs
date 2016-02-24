@@ -32,6 +32,8 @@
 
         public virtual ICollection<Comment> Comments { get; set; }
 
+        public int NumberOfViews { get; set; }
+
         [Required]
         [MaxLength(35000)]
         public string Content { get; set; }

@@ -4,6 +4,7 @@
     using AutoMapper;
     using System.Linq;
     using Infrastructure.Mapping;
+    using Statistics;
 
     public class StoryDetailsViewModel : IMapFrom<Data.Models.Story>, IHaveCustomMappings
     {
@@ -14,6 +15,8 @@
         public string AuthorName { get; set; }
 
         public ICollection<string> Genres { get; set; }
+
+        public StatisticsStoryViewModel StatisticsStoryViewModel { get; set; }
 
         public void CreateMappings(IMapperConfiguration configuration)
         {

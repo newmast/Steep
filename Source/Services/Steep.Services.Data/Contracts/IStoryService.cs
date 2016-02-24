@@ -17,5 +17,7 @@
         IQueryable<Story> GetLastestStories(int numberOfStories);
 
         void Update(Story story);
+
+        void IncreaseViewCount(int storyId);
     }
 }

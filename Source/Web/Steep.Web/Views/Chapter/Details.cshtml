@@ -10,17 +10,20 @@
 <div class="container">
     <h1>@Model.Title</h1>
     <h3>From story: @Model.StoryName <a href="/story/details/@Model.StoryUrl">[Read more]</a></h3>
-    <p>@Model.Content</p>
+    <p>@Html.Raw(Model.Content)</p>
     <strong>By: @Model.Author</strong>
     <div>On: @Model.CreatedOn</div>
-
     <div>
         @Html.EditorFor(x => x.AddCommentViewModel.Content)
         <div>
             <input type="submit" value="Post comment" id="post-comment" />
         </div>
     </div>
+
+    @Html.Partial("~/Views/Statistics/_ChapterStatistics.cshtml", Model.StatisticsChapterViewModel)
+
     <br />
+
     @Html.Partial("~/Views/Comment/_ChapterComments.cshtml", Model.Comments)
 </div>
 

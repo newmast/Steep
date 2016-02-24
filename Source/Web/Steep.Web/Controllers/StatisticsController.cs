@@ -7,7 +7,7 @@
     using System.Web;
     using Microsoft.AspNet.Identity.Owin;
     using System.Linq;
-    public class StatisticsController : Controller
+    public class StatisticsController : BaseController
     {
         private IStatisticsService stats;
 
@@ -16,16 +16,20 @@
             this.stats = stats;
         }
 
-        public ActionResult Index()
+        public StatisticsIndexViewModel GetStats()
         {
-            var model = new StatisticsIndexViewModel
+            return new StatisticsIndexViewModel
             {
                 NumberOfChapters = this.stats.GetNumberOfChapters(),
                 NumberOfStories = this.stats.GetNumberOfStories(),
                 NumberOfGenres = this.stats.GetNumberOfGenres(),
                 NumberOfUsers = this.GetNumberOfUsers()
             };
+        }
 
+        public ActionResult Index()
+        {
+            var model = this.Cache.Get("stats", () => this.GetStats(), 60 * 15);
             return this.View(model);
         }
 

@@ -35,6 +35,8 @@
                 {
                     UserName = UserName,
                     PasswordHash = hasher.HashPassword(UserName),
+                    Firstname = "The",
+                    Lastname = "Administrator",
                     Email = "admin@admin.com",
                     EmailConfirmed = true,
                     SecurityStamp = Guid.NewGuid().ToString()

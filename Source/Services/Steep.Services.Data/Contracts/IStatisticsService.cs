@@ -7,5 +7,11 @@
         int GetNumberOfStories();
 
         int GetNumberOfGenres();
+
+        int GetNumberOfChaptersForStory(int storyId);
+
+        int GetChapterViews(int chapterId);
+
+        int GetStoryViews(int storyId);
     }
 }
