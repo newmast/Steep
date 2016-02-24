@@ -6,5 +6,7 @@
     public interface IGenreService
     {
         IQueryable<Genre> All();
+
+        void Update(Genre newGenre);
     }
 }

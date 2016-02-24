@@ -5,7 +5,7 @@
     using Steep.Data.Models;
     using Steep.Data.Common;
     using System;
-
+    using System.Collections.Generic;
     public class ChapterService : IChapterService
     {
         private IDbRepository<Chapter> chapterRepository;
@@ -48,11 +48,34 @@
                 .Take(10);
         }
 
+        public void IncreaseViewCount(int chapterId)
+        {
+            var chapter = this.chapterRepository.All().FirstOrDefault(x => x.Id == chapterId);
+            chapter.NumberOfViews++;
+            this.chapterRepository.Save();
+        }
+
         public bool IsTitleUnique(string title)
         {
             return this.chapterRepository
                 .All()
                 .FirstOrDefault(x => x.Title == title) == null;
+        }
+
+        public void Update(Chapter entity)
+        {
+            var forUpdate = this.chapterRepository.All().FirstOrDefault(x => x.Id == entity.Id);
+
+            forUpdate.IsDeleted = entity.IsDeleted;
+            forUpdate.AuthorId = entity.AuthorId;
+            forUpdate.Comments = new List<Comment>(entity.Comments);
+            forUpdate.Content = entity.Content;
+            forUpdate.ModifiedOn = entity.ModifiedOn;
+            forUpdate.PreviousChapterId = entity.PreviousChapterId;
+            forUpdate.StoryId = entity.StoryId;
+            forUpdate.Title = entity.Title;
+
+            this.chapterRepository.Save();
         }
     }
 }

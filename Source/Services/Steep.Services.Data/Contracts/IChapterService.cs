@@ -16,5 +16,9 @@
         Chapter Add(Chapter chapterToAdd);
 
         IQueryable<Chapter> GetById(int id);
+
+        void Update(Chapter entity);
+
+        void IncreaseViewCount(int chapterId);
     }
 }

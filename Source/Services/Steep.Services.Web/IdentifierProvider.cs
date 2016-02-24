@@ -5,16 +5,16 @@
 
     public class IdentifierProvider : IIdentifierProvider
     {
-        public int DecodeId(string urlId)
+        public string DecodeId(string urlId)
         {
-            var base64EncodedBytes = System.Convert.FromBase64String(urlId);
-            return int.Parse(Encoding.UTF8.GetString(base64EncodedBytes));
+            var base64EncodedBytes = Convert.FromBase64String(urlId);
+            return Encoding.UTF8.GetString(base64EncodedBytes);
         }
 
         public string EncodeId(string id)
         {
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(id);
-            return System.Convert.ToBase64String(plainTextBytes);
+            var plainTextBytes = Encoding.UTF8.GetBytes(id);
+            return Convert.ToBase64String(plainTextBytes);
         }
     }
 }

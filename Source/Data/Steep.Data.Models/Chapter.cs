@@ -10,6 +10,7 @@
         {
             this.UsersThatRead = new HashSet<User>();
             this.PreviousChapters = new HashSet<Chapter>();
+            this.Comments = new HashSet<Comment>();
         }
 
         [Required]
@@ -29,8 +30,12 @@
 
         public virtual ICollection<User> UsersThatRead { get; set; }
 
+        public virtual ICollection<Comment> Comments { get; set; }
+
+        public int NumberOfViews { get; set; }
+
         [Required]
-        [MaxLength(15000)]
+        [MaxLength(35000)]
         public string Content { get; set; }
 
         [Required]
