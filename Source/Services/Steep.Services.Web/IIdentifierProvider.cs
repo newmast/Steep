@@ -2,7 +2,7 @@
 {
     public interface IIdentifierProvider
     {
-        int DecodeId(string urlId);
+        string DecodeId(string urlId);
 
         string EncodeId(string id);
     }

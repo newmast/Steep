@@ -1,0 +1,35 @@
+﻿@using Kendo.Mvc.UI
+@model Steep.Web.Areas.Administration.Models.ChapterAdminViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@(Html.Kendo().Grid<Steep.Web.Areas.Administration.Models.ChapterAdminViewModel>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+          columns.Bound(c => c.Title);
+          columns.Bound(c => c.StoryId);
+          columns.Bound(c => c.PreviousChapterId);
+          columns.Bound(c => c.Content);
+          columns.Bound(c => c.AuthorName);
+          columns.Command(command => { command.Edit(); command.Destroy(); }).Width(180);
+      })
+      .Editable(editable => editable.Mode(GridEditMode.InLine))
+      .Pageable()
+      .Sortable(sortable =>
+      {
+          sortable.SortMode(GridSortMode.SingleColumn);
+      })
+      .Filterable()
+      .Scrollable()
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Model(model => model.Id(p => p.Id))
+          .Read(read => read.Action("Chapters_Read", "ChapterAdmin"))
+          .Update(update => update.Action("Chapters_Update", "ChapterAdmin"))
+          .Destroy(destroy => destroy.Action("Chapters_Destroy", "ChapterAdmin"))
+      )
+)

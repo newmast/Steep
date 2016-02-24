@@ -11,18 +11,26 @@
 <div class="container">
     <h1>Latest work</h1>
     <div>
-        @foreach (var chapter in Model.LatestChapters)
-        {
-            <div>
-                <h1><a href="/chapter/details/@chapter.Identifier">@chapter.Title</a></h1>
-                @Html.ActionLink(chapter.Title,
-                "Details",
-                "Chapter",
-                new { id = chapter.Identifier }, 
-                null)
-                <p>@chapter.Content</p>
-                <strong>Authored by: @chapter.Author</strong>
-            </div>
-        }
-    </div
+        <div class="container">
+            <h1><strong>Latest stories:</strong></h1>
+            @foreach (var story in Model.LatestStories)
+            {
+                <div class="col-md-4 nav">
+                    <h1><a href="/story/details/@story.StoryIdentifier">@story.Name</a></h1>
+                    <strong>Authored by: <a href="@string.Format("/Users/{0}", story.AuthorId)">@story.AuthorName</a></strong>
+                </div>
+            }
+        </div>
+        <div class="container">
+            <h1><strong>Cool chapters:</strong></h1>
+            @foreach (var chapter in Model.LatestChapters)
+            {
+                <div>
+                    <h1><a href="/chapter/details/@chapter.Identifier">@chapter.Title</a></h1>
+                    <div>@chapter.Content</div>
+                    <strong>Authored by: <a href="@string.Format("/Users/{0}", chapter.AuthorId)">@chapter.AuthorName</a></strong>
+                </div>
+            }
+        </div>
+    </div>
 </div>

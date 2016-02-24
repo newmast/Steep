@@ -1,0 +1,36 @@
+﻿@using Kendo.Mvc.UI
+
+@model Steep.Web.Areas.Administration.Models.StoryAdminViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@(Html.Kendo().Grid<Steep.Web.Areas.Administration.Models.StoryAdminViewModel>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+          columns.Bound(c => c.Name);
+          columns.Bound(c => c.AuthorName);
+          columns.Bound(c => c.CreatedOn);
+          columns.Bound(c => c.ModifiedOn);
+          columns.Bound(c => c.IsDeleted);
+          columns.Command(command => { command.Edit(); command.Destroy(); }).Width(180);
+      })
+      .Editable(editable => editable.Mode(GridEditMode.InLine))
+      .Pageable()
+      .Sortable(sortable =>
+      {
+          sortable.SortMode(GridSortMode.SingleColumn);
+      })
+      .Filterable()
+      .Scrollable()
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Model(model => model.Id(p => p.Id))
+          .Read(read => read.Action("Stories_Read", "StoryAdmin"))
+          .Update(update => update.Action("Stories_Update", "StoryAdmin"))
+          .Destroy(destroy => destroy.Action("Stories_Destroy", "StoryAdmin"))
+      )
+)

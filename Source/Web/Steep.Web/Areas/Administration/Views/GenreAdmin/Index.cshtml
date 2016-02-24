@@ -1,0 +1,34 @@
+﻿@using Kendo.Mvc.UI;
+@model Steep.Web.Areas.Administration.Models.GenreAdminViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@(Html.Kendo().Grid<Steep.Web.Areas.Administration.Models.GenreAdminViewModel>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+          columns.Bound(c => c.Name);
+          columns.Bound(c => c.CreatedOn);
+          columns.Bound(c => c.ModifiedOn);
+          columns.Bound(c => c.IsDeleted);
+          columns.Command(command => { command.Edit(); command.Destroy(); }).Width(180);
+      })
+      .Editable(editable => editable.Mode(GridEditMode.InLine))
+      .Pageable()
+      .Sortable(sortable =>
+      {
+          sortable.SortMode(GridSortMode.SingleColumn);
+      })
+      .Filterable()
+      .Scrollable()
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Model(model => model.Id(p => p.Id))
+          .Read(read => read.Action("Genres_Read", "GenreAdmin"))
+          .Update(update => update.Action("Genres_Update", "GenreAdmin"))
+          .Destroy(destroy => destroy.Action("Genres_Destroy", "GenreAdmin"))
+      )
+)

@@ -1,12 +1,18 @@
 ﻿namespace Steep.Web.ViewModels.Chapter
 {
-    using Infrastructure.Mapping;
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using AutoMapper;
+    using Infrastructure.Mapping;
+    using Controllers;
 
     public class ChapterDetailsViewModel : IMapFrom<Data.Models.Chapter>, IHaveCustomMappings
     {
+        public AddCommentViewModel AddCommentViewModel { get; set; }
+
+        public string Id { get; set; }
+
         [MaxLength(30)]
         public string Title { get; set; }
 
@@ -24,6 +30,8 @@
         public string StoryName { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        public ICollection<CommentViewModel> Comments { get; set; }
 
         public void CreateMappings(IMapperConfiguration configuration)
         {

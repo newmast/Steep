@@ -1,4 +1,6 @@
-﻿@model Steep.Web.ViewModels.Users.DetailsViewModel
+﻿@using Microsoft.AspNet.Identity;
+
+@model Steep.Web.ViewModels.Users.DetailsViewModel
 @{
     ViewBag.Title = "Details";
 }
@@ -14,6 +16,9 @@
                     <img src="@Url.Content(Model.AvatarUrl)" alt="Profile image should be here." />
                 </div>
                 <div>@Model.Firstname @Model.Lastname</div>
+                <div>
+                    <button type="button" class="btn btn-primary" id="follow-button">Follow</button>
+                </div>
             </div>
         </div>
         <div class="col-md-9 text-left">

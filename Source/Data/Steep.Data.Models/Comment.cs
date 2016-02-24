@@ -1,8 +1,7 @@
 ﻿namespace Steep.Data.Models
 {
-    using Common.Models;
-    using System;
     using System.ComponentModel.DataAnnotations;
+    using Common.Models;
 
     public class Comment : BaseModel<int>
     {
@@ -10,9 +9,8 @@
         public int ChapterId { get; set; }
 
         public virtual Chapter Chapter { get; set; }
-
-        [Required]
-        public int UserId { get; set; }
+        
+        public string UserId { get; set; }
 
         public virtual User User { get; set; }
 

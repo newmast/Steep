@@ -9,7 +9,7 @@
     using Microsoft.AspNet.Identity.EntityFramework;
 
     using Models;
-
+    using System.Data.Entity.ModelConfiguration.Conventions;
     public class SteepDbContext : IdentityDbContext<User>
     {
         public SteepDbContext()
@@ -29,7 +29,7 @@
         {
             return new SteepDbContext();
         }
-
+        
         public override int SaveChanges()
         {
             this.ApplyAuditInfoRules();

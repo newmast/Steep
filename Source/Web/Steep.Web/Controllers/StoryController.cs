@@ -4,10 +4,10 @@
     using System.Web.Mvc;
     using Services.Data.Contracts;
     using Services.Web;
-    using ViewModels.Chapter;
-    using ViewModels.Story;
     using Infrastructure.Mapping;
-
+    using ViewModels.Story;
+    using System.Collections.Generic;
+    using Data.Models;
     [Authorize]
     public class StoryController : BaseController
     {
@@ -31,11 +31,12 @@
         [HttpGet]
         public ActionResult Details(string id)
         {
-            var dbId = this.identifierProvider.DecodeId(id);
+            var dbId = int.Parse(this.identifierProvider.DecodeId(id));
             var storyDetails = this.storyService
                 .GetById(dbId)
                 .To<StoryDetailsViewModel>()
                 .FirstOrDefault();
+            
             return this.View(storyDetails);
         }
 
@@ -57,9 +58,16 @@
             return this.RedirectToAction("Index", "Home");
         }
 
-        public JsonResult GetChapters(int id)
+        public ActionResult GetChapters(int id)
         {
-            var chapters = this.chapterService.GetChaptersByStoryId(id);
+            var chapters = this.chapterService
+                .GetChaptersByStoryId(id)
+                .Select(x => new
+                {
+                    Title = x.Title,
+                    Id = x.Id
+                })
+                .ToList();
             return this.Json(chapters, JsonRequestBehavior.AllowGet);
         }
     }

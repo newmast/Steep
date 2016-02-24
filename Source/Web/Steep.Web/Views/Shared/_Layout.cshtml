@@ -8,6 +8,7 @@
     @Styles.Render("~/Content/kendo-css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/kendo")
+    @RenderSection("styles", required: false)
 </head>
 <body>
     <div class="navbar navbar-default navbar-fixed-top">
@@ -25,6 +26,7 @@
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = string.Empty }, null)</li>
                     <li>@Html.ActionLink("Add story", "Add", "Story", new { area = string.Empty }, null)</li>
                     <li>@Html.ActionLink("Add chapter", "Add", "Chapter", new { area = string.Empty }, null)</li>
+                    <li>@Html.ActionLink("All chapters", "All", "Chapter", new { area = string.Empty }, null)</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

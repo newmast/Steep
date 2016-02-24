@@ -6,7 +6,6 @@
     using Microsoft.AspNet.Identity.EntityFramework;
 
     using Models;
-    using Steep.Common;
     using System;
     public sealed class Configuration : DbMigrationsConfiguration<SteepDbContext>
     {

@@ -9,14 +9,8 @@
     <h1>@Model.Name</h1>
     <h3>By: @Model.AuthorName</h3>
 
-    @(Html.Kendo().TreeView()
-        .Name("treeview")
-        .DataTextField("Title")
-        .DataSource(dataSource => dataSource
-            .Read(read => read
-                .Action("GetChapters", "Story")
-            )
-        )
-    )
+    @foreach (var genre in Model.Genres)
+    {
+        <div class="badge">@genre</div>
+    }
 </div>
-

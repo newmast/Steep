@@ -1,4 +1,5 @@
-﻿@model Steep.Web.ViewModels.Chapter.ChapterDetailsViewModel
+﻿@using Microsoft.AspNet.Identity;
+@model Steep.Web.ViewModels.Chapter.ChapterDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -8,9 +9,40 @@
 
 <div class="container">
     <h1>@Model.Title</h1>
-    <h3>From story: @Model.StoryName <a href="/story/@Model.StoryUrl">[Read more]</a></h3>
+    <h3>From story: @Model.StoryName <a href="/story/details/@Model.StoryUrl">[Read more]</a></h3>
     <p>@Model.Content</p>
-    <strong>@Model.Author</strong>
+    <strong>By: @Model.Author</strong>
     <div>On: @Model.CreatedOn</div>
+
+    <div>
+        @Html.EditorFor(x => x.AddCommentViewModel.Content)
+        <div>
+            <input type="submit" value="Post comment" id="post-comment" />
+        </div>
+    </div>
+    <br />
+    @Html.Partial("~/Views/Comment/_ChapterComments.cshtml", Model.Comments)
 </div>
 
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#post-comment').on('click', function () {
+                $.ajax({
+                    url: "@(Url.Action("Add", "Comment"))",
+                    type: "POST",
+                    cache: false,
+                    async: true,
+                    data: {
+                        Content: $('#AddCommentViewModel_Content').val(),
+                        AuthorId: '@this.User.Identity.GetUserId()',
+                        ChapterId: '@Model.Id'
+                    },
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            });
+        });
+    </script>
+}
