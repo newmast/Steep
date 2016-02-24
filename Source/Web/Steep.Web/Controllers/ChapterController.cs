@@ -2,13 +2,15 @@
 {
     using Data.Models;
     using Infrastructure.Mapping;
+    using Kendo.Mvc.Extensions;
+    using Kendo.Mvc.UI;
     using Services.Data.Contracts;
     using Services.Web;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using ViewModels.Chapter;
-
+    using ViewModels.Home;
     [Authorize]
     public class ChapterController : BaseController
     {
@@ -21,6 +23,31 @@
             this.storyService = storyService;
             this.chapterService = chapterService;
             this.identifierProvider = identifierProvider;
+        }
+
+        [HttpGet]
+        public ActionResult All()
+        {
+            var model = this.chapterService.All()
+                .To<IndexChapterViewModel>()
+                .ToList();
+
+            foreach (var item in model)
+            {
+                item.Identifier = this.identifierProvider.EncodeId(item.Id.ToString());
+            }
+
+            return this.View(model);
+        }
+
+        public ActionResult Chapters_Read([DataSourceRequest]DataSourceRequest request)
+        {
+            DataSourceResult result = this.storyService
+                .All()
+                .To<IndexChapterViewModel>()
+                .ToDataSourceResult(request);
+
+            return this.Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -78,7 +105,7 @@
         [HttpGet]
         public ActionResult Details(string id)
         {
-            var dbId = this.identifierProvider.DecodeId(id);
+            var dbId = int.Parse(this.identifierProvider.DecodeId(id));
             var chapterDetails = this.chapterService
                 .GetById(dbId)
                 .To<ChapterDetailsViewModel>()
@@ -98,7 +125,7 @@
                 })
                 .ToList();
         }
-        
+
         public List<SelectListItem> GetPreviousAvailableChapters()
         {
             var chapterList = new List<SelectListItem>();

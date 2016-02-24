@@ -1,34 +1,43 @@
 ﻿namespace Steep.Web.Controllers
 {
-    using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using Services.Data.Contracts;
-    using Microsoft.AspNet.Identity;
+    using Services.Web;
+    using Infrastructure.Mapping;
     using ViewModels.Story;
-    using System.Linq;
-
+    using System.Collections.Generic;
+    using Data.Models;
     [Authorize]
     public class StoryController : BaseController
     {
         private IStoryService storyService;
         private IGenreService genreService;
+        private IChapterService chapterService;
+        private IIdentifierProvider identifierProvider;
 
-        public StoryController(IStoryService storyService, IGenreService genreService)
+        public StoryController(
+            IStoryService storyService,
+            IGenreService genreService,
+            IIdentifierProvider identifierProvider,
+            IChapterService chapterService)
         {
             this.storyService = storyService;
             this.genreService = genreService;
+            this.chapterService = chapterService;
+            this.identifierProvider = identifierProvider;
         }
 
         [HttpGet]
         public ActionResult Details(string id)
         {
-            var dbId = this.identifierProvider.DecodeId(id);
-            var chapterDetails = this.chapterService
+            var dbId = int.Parse(this.identifierProvider.DecodeId(id));
+            var storyDetails = this.storyService
                 .GetById(dbId)
-                .To<ChapterDetailsViewModel>()
+                .To<StoryDetailsViewModel>()
                 .FirstOrDefault();
-            chapterDetails.StoryUrl = this.identifierProvider.EncodeId(chapterDetails.StoryId.ToString());
-            return this.View(chapterDetails);
+            
+            return this.View(storyDetails);
         }
 
         [HttpGet]
@@ -47,6 +56,19 @@
         {
             this.storyService.Create(model.Name, this.UserId, model.SelectedGenres);
             return this.RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult GetChapters(int id)
+        {
+            var chapters = this.chapterService
+                .GetChaptersByStoryId(id)
+                .Select(x => new
+                {
+                    Title = x.Title,
+                    Id = x.Id
+                })
+                .ToList();
+            return this.Json(chapters, JsonRequestBehavior.AllowGet);
         }
     }
 }

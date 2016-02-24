@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Chapter.cs" />
     <Compile Include="Comment.cs" />
+    <Compile Include="Following.cs" />
     <Compile Include="Genre.cs" />
     <Compile Include="Story.cs" />
     <Compile Include="User.cs" />

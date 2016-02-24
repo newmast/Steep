@@ -25,7 +25,7 @@
             var existingGenres = this.genreRepository.All()
                 .Where(x => genreNames.Contains(x.Name))
                 .ToList();
-        
+
             foreach (var genre in genreNames)
             {
                 if (!existingGenres.AsQueryable().Select(x => x.Name).Contains(genre))
@@ -53,12 +53,43 @@
             this.storyRepository.Save();
 
             return this.storyRepository.All()
-                       .FirstOrDefault(x => x.Name == story.Name);
+                .FirstOrDefault(x => x.Name == story.Name);
         }
 
         public IQueryable<Story> All()
         {
             return this.storyRepository.All();
+        }
+
+        public IQueryable<Story> GetById(int id)
+        {
+            return this.storyRepository.All()
+                .Where(x => x.Id == id);
+        }
+
+        public IQueryable<Story> AllForUser(string userId)
+        {
+            return this.storyRepository.All()
+                .Where(x => x.AuthorId == userId);
+        }
+
+        public void Update(Story story)
+        {
+            var dbStory = this.storyRepository.All().FirstOrDefault(x => x.Id == story.Id);
+
+            dbStory.IsDeleted = story.IsDeleted;
+            dbStory.ModifiedOn = story.ModifiedOn;
+            dbStory.Name = story.Name;
+            dbStory.Genres = new List<Genre>(story.Genres);
+            dbStory.Chapters = new List<Chapter>(story.Chapters);
+            this.storyRepository.Save();
+        }
+
+        public IQueryable<Story> GetLastestStories(int numberOfStories)
+        {
+            return this.storyRepository.All()
+                .OrderByDescending(x => x.CreatedOn)
+                .Take(numberOfStories);
         }
     }
 }

@@ -1,0 +1,35 @@
+﻿@using Kendo.Mvc.UI;
+@model Steep.Web.Areas.Administration.Models.UserAdminViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@(Html.Kendo().Grid<Steep.Web.Areas.Administration.Models.UserAdminViewModel>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+          columns.Bound(c => c.UserName);
+          columns.Bound(c => c.Firstname);
+          columns.Bound(c => c.Lastname);
+          columns.Bound(c => c.Email);
+          columns.Bound(c => c.Quote);
+          columns.Command(command => { command.Edit(); command.Destroy(); }).Width(180);
+      })
+      .Editable(editable => editable.Mode(GridEditMode.InLine))
+      .Pageable()
+      .Sortable(sortable =>
+      {
+          sortable.SortMode(GridSortMode.SingleColumn);
+      })
+      .Filterable()
+      .Scrollable()
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Model(model => model.Id(p => p.Id))
+          .Read(read => read.Action("Users_Read", "UserAdmin"))
+          .Update(update => update.Action("Users_Update", "UserAdmin"))
+          .Destroy(destroy => destroy.Action("Users_Destroy", "UserAdmin"))
+      )
+)

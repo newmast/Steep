@@ -7,5 +7,7 @@
         public string NotificationMessage { get; set; }
 
         public List<IndexChapterViewModel> LatestChapters { get; set; }
+
+        public List<IndexStoryViewModel> LatestStories { get; set; }
     }
 }

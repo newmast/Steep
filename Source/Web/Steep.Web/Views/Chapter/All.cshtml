@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Steep.Web.ViewModels.Home.IndexChapterViewModel>
+@{
+    ViewBag.Title = "All";
+}
+
+<h2>All</h2>
+
+<script type="text/x-kendo-tmpl" id="template">
+    <div class="container">
+        <div class="chapter">
+            <h3><a href="/Chapter/Details/#:Identifier#">#:Title#</a></h3>
+            <p>#:Content#</p>
+            <p>#:AuthorName#</p>
+        </div>
+    </div>
+</script>
+
+
+@(Html.Kendo().ListView(Model)
+    .Name("listView")
+    .ClientTemplateId("template")
+    .TagName("div")
+    .DataSource(dataSource =>
+    {
+        dataSource.Read(read => read.Action("Chapters_Read", "Chapter"));
+        dataSource.PageSize(5);
+    })
+    .Pageable()
+)
