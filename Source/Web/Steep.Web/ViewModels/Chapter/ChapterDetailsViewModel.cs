@@ -1,35 +1,19 @@
 ﻿namespace Steep.Web.ViewModels.Chapter
 {
-    using Infrastructure.Mapping;
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using AutoMapper;
+    using System.Collections.Generic;
+    using Controllers;
+    using Statistics;
 
-    public class ChapterDetailsViewModel : IMapFrom<Data.Models.Chapter>, IHaveCustomMappings
+    public class ChapterDetailsViewModel
     {
-        [MaxLength(30)]
-        public string Title { get; set; }
+        public int ChapterId { get; set; }
 
-        public int? PreviousChapterId { get; set; }
+        public AddCommentViewModel AddCommentViewModel { get; set; }
 
-        public string Author { get; set; }
+        public StatisticsChapterViewModel StatisticsChapterViewModel { get; set; }
 
-        [MaxLength(15000)]
-        public string Content { get; set; }
+        public ICollection<SingleChapterViewModel> SingleChapterViewModel { get; set; }
 
-        public string StoryUrl { get; set; }
-
-        public int StoryId { get; set; }
-
-        public string StoryName { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-
-        public void CreateMappings(IMapperConfiguration configuration)
-        {
-            configuration.CreateMap<Data.Models.Chapter, ChapterDetailsViewModel>()
-                .ForMember(x => x.Author, opts => opts.MapFrom(m => m.Author.UserName))
-                .ForMember(x => x.StoryName, opts => opts.MapFrom(m => m.Story.Name));
-        }
+        public ICollection<CommentViewModel> Comments { get; set; }
     }
 }

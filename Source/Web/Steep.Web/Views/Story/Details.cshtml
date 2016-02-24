@@ -1,0 +1,20 @@
+﻿@model Steep.Web.ViewModels.Story.StoryDetailsViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="container">
+    <h1>@Model.Name</h1>
+    <h3>By: @Model.AuthorName</h3>
+
+    @foreach (var genre in Model.Genres)
+    {
+        <div class="badge">@genre</div>
+    }
+
+    <hr />
+
+    @Html.Partial("~/Views/Statistics/_StoryStatistics.cshtml", Model.StatisticsStoryViewModel)
+</div>

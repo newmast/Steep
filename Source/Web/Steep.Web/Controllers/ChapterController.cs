@@ -2,25 +2,59 @@
 {
     using Data.Models;
     using Infrastructure.Mapping;
+    using Kendo.Mvc.Extensions;
+    using Kendo.Mvc.UI;
     using Services.Data.Contracts;
     using Services.Web;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using ViewModels.Chapter;
-
+    using ViewModels.Home;
+    using ViewModels.Statistics;
     [Authorize]
     public class ChapterController : BaseController
     {
         private IStoryService storyService;
         private IChapterService chapterService;
+        private IStatisticsService statisticsService;
         private IIdentifierProvider identifierProvider;
 
-        public ChapterController(IStoryService storyService, IChapterService chapterService, IIdentifierProvider identifierProvider)
+        public ChapterController(
+            IStoryService storyService,
+            IChapterService chapterService,
+            IIdentifierProvider identifierProvider,
+            IStatisticsService statisticsService)
         {
             this.storyService = storyService;
             this.chapterService = chapterService;
             this.identifierProvider = identifierProvider;
+            this.statisticsService = statisticsService;
+        }
+
+        [HttpGet]
+        public ActionResult All()
+        {
+            var model = this.chapterService.All()
+                .To<IndexChapterViewModel>()
+                .ToList();
+
+            foreach (var item in model)
+            {
+                item.Identifier = this.identifierProvider.EncodeId(item.Id.ToString());
+            }
+
+            return this.View(model);
+        }
+
+        public ActionResult Chapters_Read([DataSourceRequest]DataSourceRequest request)
+        {
+            DataSourceResult result = this.storyService
+                .All()
+                .To<IndexChapterViewModel>()
+                .ToDataSourceResult(request);
+
+            return this.Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -78,16 +112,67 @@
         [HttpGet]
         public ActionResult Details(string id)
         {
-            var dbId = this.identifierProvider.DecodeId(id);
-            var chapterDetails = this.chapterService
+            var dbId = int.Parse(this.identifierProvider.DecodeId(id));
+
+            var chapterDetails = new ChapterDetailsViewModel();
+            chapterDetails.ChapterId = dbId;
+            var chaptersList = new List<SingleChapterViewModel>();
+            chapterDetails.Comments = new List<CommentViewModel>();
+            var comments = this.chapterService
                 .GetById(dbId)
-                .To<ChapterDetailsViewModel>()
+                .Select(x => x.Comments)
                 .FirstOrDefault();
-            chapterDetails.StoryUrl = this.identifierProvider.EncodeId(chapterDetails.StoryId.ToString());
+
+            foreach (var comment in comments)
+            {
+                var mappedComment = this.Mapper.Map<CommentViewModel>(comment);
+                chapterDetails.Comments.Add(mappedComment);
+            }
+
+            this.GetChildren(ref chaptersList, dbId);
+
+            chapterDetails.SingleChapterViewModel = chaptersList;
+
+            foreach (var chapter in chapterDetails.SingleChapterViewModel)
+            {
+                chapter.StoryUrl = this.identifierProvider.EncodeId(chapter.StoryId.ToString());
+            }
+
+            chapterDetails.StatisticsChapterViewModel = this.Cache.Get("GetChapterStats", () => this.GetStats(dbId), 60 * 15);
+            this.chapterService.IncreaseViewCount(dbId);
+
             return this.View(chapterDetails);
         }
 
-        public List<SelectListItem> GetStoriesForExtension()
+        public void GetChildren(ref List<SingleChapterViewModel> chapters, int? id)
+        {
+            if (id == null)
+            {
+                return;
+            }
+
+            var chapter = this.chapterService
+                .All()
+                .Where(x => x.Id == id)
+                .To<SingleChapterViewModel>()
+                .FirstOrDefault();
+            chapters.Add(chapter);
+
+            if (chapter.PreviousChapterId != null)
+            {
+                this.GetChildren(ref chapters, chapter.PreviousChapterId);
+            }
+        }
+
+        private StatisticsChapterViewModel GetStats(int id)
+        {
+            return new StatisticsChapterViewModel
+            {
+                ChapterViews = this.statisticsService.GetChapterViews(id)
+            };
+        }
+
+        private List<SelectListItem> GetStoriesForExtension()
         {
             return this.storyService
                 .All()
@@ -98,8 +183,8 @@
                 })
                 .ToList();
         }
-        
-        public List<SelectListItem> GetPreviousAvailableChapters()
+
+        private List<SelectListItem> GetPreviousAvailableChapters()
         {
             var chapterList = new List<SelectListItem>();
             chapterList.Add(new SelectListItem

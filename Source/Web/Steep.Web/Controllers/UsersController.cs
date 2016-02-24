@@ -1,34 +1,41 @@
 ﻿namespace Steep.Web.Controllers
 {
-    using System.Threading.Tasks;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using Data.Models;
     using Microsoft.AspNet.Identity.Owin;
-    using ViewModels.Users;
     using Services.Data.Contracts;
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
+    using Services.Web;
+    using ViewModels.Users;
+
     public class UsersController : BaseController
     {
         private IStoryService storyService;
         private IChapterService chapterService;
+        private IIdentifierProvider identifierProvider;
 
-        public UsersController(IStoryService storyService, IChapterService chapterService)
+        public UsersController(
+            IStoryService storyService,
+            IChapterService chapterService,
+            IIdentifierProvider identifierProvider)
         {
             this.storyService = storyService;
             this.chapterService = chapterService;
+            this.identifierProvider = identifierProvider;
         }
 
         [HttpGet]
-        public async Task<ActionResult> Details(string id)
+        public ActionResult Details(string id)
         {
+            var decodedId = this.identifierProvider.DecodeId(id);
             var userManager = this.Request.GetOwinContext().GetUserManager<SteepUserManager>();
-            var user = await userManager.FindByNameAsync(id);
+            var user = userManager.Users.FirstOrDefault(x => x.Id == decodedId);
 
             var model = new DetailsViewModel
             {
+                Id = id,
                 AvatarUrl = user.AvatarUrl,
                 Chapters = this.GetUserChapters(user.Id),
                 Firstname = user.Firstname,
@@ -38,6 +45,19 @@
             };
 
             return this.View(model);
+        }
+
+        [HttpPost]
+        public ActionResult GetFollowed(string id)
+        {
+            var userManager = this.Request.GetOwinContext().GetUserManager<SteepUserManager>();
+            var user = userManager.Users.FirstOrDefault(x => x.Id == this.UserId);
+
+            return this.Json(new
+            {
+                success = true,
+                message = "Followed!"
+            });
         }
 
         private List<Story> GetUserStories(string id)

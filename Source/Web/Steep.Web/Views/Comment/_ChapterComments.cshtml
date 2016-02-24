@@ -1,0 +1,10 @@
+﻿@model ICollection<Steep.Web.ViewModels.Chapter.CommentViewModel>
+@foreach (var comment in Model)
+{
+    <div class="col-md-12 text-left">
+        <img class="col-md-1" src="@Url.Content(@comment.AvatarUrl ?? "~/Content/Images/default-avatar.png")" />
+        <div><strong>@comment.AuthorName</strong></div>
+        <div><small>@comment.CreatedOn</small></div>
+        <div>@comment.Content</div>
+    </div>
+}
