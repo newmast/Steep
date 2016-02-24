@@ -30,7 +30,7 @@
         {
             return this.genreRepository.All().Count();
         }
-        
+
         public int GetNumberOfStories()
         {
             return this.storyRepository.All().Count();

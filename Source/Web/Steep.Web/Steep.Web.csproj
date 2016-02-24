@@ -206,9 +206,11 @@
     <Compile Include="Areas\Administration\Controllers\ChapterAdminController.cs" />
     <Compile Include="Areas\Administration\Controllers\GenreAdminController.cs" />
     <Compile Include="Areas\Administration\Controllers\StoryAdminController.cs" />
+    <Compile Include="Areas\Administration\Controllers\UserAdminController.cs" />
     <Compile Include="Areas\Administration\Models\ChapterAdminViewModel.cs" />
     <Compile Include="Areas\Administration\Models\GenreAdminViewModel.cs" />
     <Compile Include="Areas\Administration\Models\StoryAdminViewModel.cs" />
+    <Compile Include="Areas\Administration\Models\UserAdminViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="ViewModels\Comment\AddCommentViewModel.cs" />
@@ -291,6 +293,7 @@
     <Content Include="Areas\Administration\Views\StoryAdmin\Index.cshtml" />
     <Content Include="Areas\Administration\Views\ChapterAdmin\Index.cshtml" />
     <Content Include="Areas\Administration\Views\GenreAdmin\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\UserAdmin\Index.cshtml" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />
